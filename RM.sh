@@ -1,15 +1,19 @@
 #!/bin/bash
 while true; do
-	if [ $# -gt 2 ] || [ $# -eq 0 ]
+	echo -e "enter [Option]\nOptions:\na for all process info\ncpuid for PIDs with the most CPU usage (desc)\nmemid for PIDs with the most memory usage (desc)\nq to quit the Program "
+	read x	
+	if [ "$x" = "a" ]
 	then
-		echo -e " enter RM [Option]\nOptions:\na for all process info\ncpuid for PIDs with the most CPU usage (desc)\nmemid for PIDs with the most memory usage (desc)\n "
-		
-	elif [ $# -eq 1 ]
+		ps -aux 
+	elif [ "$x" = "cpuid" ]
 	then
-		if [ "$1" = "a" ]
-		then
-			echo -a `ps` 
-		fi
+		ps -aux | awk '{print $2,":  "$11,"--->> ", $3, "%" }'
+	elif [ "$x" = "memid" ]
+	then
+		ps -aux | awk '{print $2,":  "$11,"--->> ", $4, "%" }'
+	elif [ "$x" = "q" ]
+	then
+		echo "Ending... thanks for using our program"
+		exit 0
 	fi
-	exit 0
 done
